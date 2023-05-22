@@ -41,7 +41,6 @@ public class AccordionTest extends BaseTest {
     public void accordionTest() {
 
         MainPage mainPage = new MainPage(webDriver)
-                .clickCloseCoockisNotification()
                 .scrollToAccordion()
                 .clickAccordionButton("accordion__heading-" + question);
 

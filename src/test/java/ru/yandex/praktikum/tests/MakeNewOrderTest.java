@@ -18,8 +18,9 @@ public class MakeNewOrderTest extends BaseTest {
     private final String dateFrom;
     private final String rentPeriod;
     private final String courierComment;
+    private final String orderButton;
 
-    public MakeNewOrderTest(String firstName, String lastName, String address, String phone, String dateFrom, String rentPeriod, String courierComment) {
+    public MakeNewOrderTest(String firstName, String lastName, String address, String phone, String dateFrom, String rentPeriod, String courierComment, String orderButton) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -27,6 +28,7 @@ public class MakeNewOrderTest extends BaseTest {
         this.dateFrom = dateFrom;
         this.rentPeriod = rentPeriod;
         this.courierComment = courierComment;
+        this.orderButton = orderButton;
     }
 
     @Parameterized.Parameters
@@ -35,8 +37,8 @@ public class MakeNewOrderTest extends BaseTest {
         String dateFromToday = now().format(ofPattern("d"));
         String dateFromTomorrow = now().plusDays(1).format(ofPattern("d"));
         return new Object[][]{
-                {"Иванов", "Иван", "ул. Мира 16-34", "+79124445533", dateFromToday, "сутки", "Оплата картой"},
-                {"Пётр", "Петров", "ул. Никольская 20-77", "+79224785413", dateFromTomorrow, "двое суток", "Оплата наличными"},
+                {"Иванов", "Иван", "ул. Мира 16-34", "+79124445533", dateFromToday, "сутки", "Оплата картой", "orderButtonTop"},
+                {"Пётр", "Петров", "ул. Никольская 20-77", "+79224785413", dateFromTomorrow, "двое суток", "Оплата наличными", "orderButtonDown"},
         };
     }
 
@@ -44,8 +46,7 @@ public class MakeNewOrderTest extends BaseTest {
     public void makeNewOrder() {
 
         new MainPage(webDriver)
-                .clickCloseCoockisNotification()
-                .clickOrderButton()
+                .clickOrderButton(orderButton)
                 .setUserData(firstName, lastName, address, phone)
                 .clickMetroStation()
                 .nextClick()

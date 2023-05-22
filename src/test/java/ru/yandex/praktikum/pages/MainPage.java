@@ -1,9 +1,6 @@
 package ru.yandex.praktikum.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -15,8 +12,11 @@ public class MainPage{
     //кнопка скрытия согласия
     public By closeCookiesButton = By.id("rcc-confirm-button");
 
-    //кнопка заказа
-    public By orderButton = By.xpath(".//div[@class='Header_Nav__AGCXC']/button[text()='Заказать']");
+    //кнопка заказа в хедере
+    public By orderButtonTop = By.xpath(".//div[@class='Header_Nav__AGCXC']/button[text()='Заказать']");
+
+    //Кнопка заказа на странице
+    public By orderButtonDown = By.xpath(".//div[@class='Home_FinishButton__1_cWm']/button");
 
     //кнопка статуса заказа
     public By orderStatusButton = By.xpath(".//button[text()='Статус заказа']");
@@ -39,13 +39,6 @@ public class MainPage{
         webDriver.get(APP_MAIN_PAGE_URL);
     }
 
-    //Закрываем уведомление о куках
-    public MainPage clickCloseCoockisNotification(){
-        webDriver.findElement(closeCookiesButton).click();
-        return this;
-
-    }
-
     //Скролл до вопросов
     public MainPage scrollToAccordion(){
         WebElement element = webDriver.findElement(By.className("accordion"));
@@ -53,9 +46,20 @@ public class MainPage{
         return this;
     }
 
-    //Клик по созданию заказа
-    public OrderPage clickOrderButton(){
-        webDriver.findElement(orderButton).click();
+    //Скролл до кнопка заказа
+    public void scrollToOrderButton(){
+        WebElement element = webDriver.findElement(By.xpath(".//div[@class='Home_FinishButton__1_cWm']/button"));
+        ((JavascriptExecutor)webDriver).executeScript("arguments[0].scrollIntoView();", element);
+    }
+
+    //Клик по созданию заказа, аргументом выбираем одну из двух кнопок заказа на странице
+    public OrderPage clickOrderButton(String orderButton){
+        if(orderButton == "orderButtonDown"){
+            scrollToOrderButton();
+            webDriver.findElement(orderButtonDown).click();
+        } else if (orderButton == "orderButtonTop"){
+            webDriver.findElement(orderButtonTop).click();
+        }
         return new OrderPage(webDriver);
     }
 

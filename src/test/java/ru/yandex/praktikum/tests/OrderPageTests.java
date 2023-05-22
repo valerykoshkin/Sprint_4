@@ -10,11 +10,12 @@ public class OrderPageTests extends BaseTest {
     String incorrectLastName = "Smith";
     String incorrectAddress = "Moscow";
     String incorrectPhone = "7512";
+    String orderButton = "orderButtonTop";
 
     @Test
     public void checkErrorInputs(){
         new MainPage(webDriver)
-                .clickOrderButton()
+                .clickOrderButton(orderButton)
                 .setUserData(incorrectFirstName, incorrectLastName, incorrectAddress, incorrectPhone)
                 .nextClick()
                 .checkInputValidation();

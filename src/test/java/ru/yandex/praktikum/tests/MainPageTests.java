@@ -10,6 +10,7 @@ import static ru.yandex.praktikum.config.AppConfig.APP_MAIN_PAGE_URL;
 
 public class MainPageTests extends BaseTest {
     String yandexURL = "https://dzen.ru/?yredirect=true";
+    String orderButton = "orderButtonTop";
 
     @Test
     public void clickYandexLogoTest(){
@@ -38,7 +39,7 @@ public class MainPageTests extends BaseTest {
 
         new MainPage(webDriver)
                 //Делаем переход на /order, чтобы убедиться, что клик по лого работает корректно и возвращает на главную
-                .clickOrderButton()
+                .clickOrderButton(orderButton)
                 .clickSamokatLogo();
 
         new WebDriverWait(webDriver, 5)
